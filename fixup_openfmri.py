@@ -17,7 +17,7 @@ import numpy as np
 from openfmri import get_subjects
 
 # Library for fixing nifti files
-import  fixnifti
+import fixnifti
 # For interactive work
 reload(fixnifti)
 
@@ -43,7 +43,7 @@ def main():
         for run in subject['functionals']:
             fname = run['filename']
             print("Fixing functional " + fname)
-            fixnifti.fixup_nifti_file(filename, 'f', TR, SLICE_AXIS, slice_times)
+            fixnifti.fixup_nifti_file(fname, 'f', TR, SLICE_AXIS, slice_times)
         for anat_fname in subject['anatomicals']:
             print("Fixing anatomical " + anat_fname)
             fixnifti.fixup_nifti_file(anat_fname)
