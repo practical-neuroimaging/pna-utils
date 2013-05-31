@@ -45,7 +45,7 @@ def set_nifti_params(img,
     if not qform is None:
         hdr.set_qform(qform)
     if not TR is None:
-        hdr['pixdim'][4] = 1.5
+        hdr['pixdim'][4] = TR
     if not slice_axis is None:
         hdr.set_dim_info(slice=slice_axis)
     if not slice_times is None:
