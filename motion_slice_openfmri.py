@@ -5,7 +5,7 @@ import sys
 
 import numpy as np
 
-from nipy.algorithms.registration import FmriRealign4d
+from nipy.algorithms.registration import SpaceTimeRealign
 from nipy import load_image, save_image
 
 # Library to fetch filenames from Open FMRI data layout
@@ -15,10 +15,10 @@ from openfmri import get_subjects
 def time_space_realign(run_fnames, TR, time_to_space, slice_axis):
     run_imgs = [load_image(run) for run in run_fnames]
     # Spatio-temporal realigner
-    R = FmriRealign4d(run_imgs,
-                      tr=TR,
-                      slice_order=time_to_space,
-                      slice_info=(slice_axis, 1))
+    R = SpaceTimeRealign(run_imgs,
+                         tr=TR,
+                         slice_times='ascending',
+                         slice_info=(slice_axis, 1))
     # Estimate motion within- and between-sessions
     R.estimate(refscan=None)
     # Save back out
