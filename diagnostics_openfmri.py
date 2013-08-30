@@ -7,6 +7,8 @@ Run with something like::
 
 where ``~/data/ds105`` is the path to the Haxby data
 """
+from __future__ import print_function
+
 import os
 import sys
 
@@ -25,6 +27,7 @@ def main():
     for name, subject in get_subjects(DATA_PATH).items():
         for run in subject['functionals']:
             fname = run['filename']
+            print("Diagnosing functional " + fname)
             img = nipy.load_image(fname)
             res = screens.screen(img, slice_axis=0)
             pth, fname = os.path.split(fname)
