@@ -12,12 +12,12 @@ from nipy import load_image, save_image
 from openfmri import get_subjects
 
 
-def time_space_realign(run_fnames, TR, time_to_space, slice_axis):
+def time_space_realign(run_fnames, TR, slice_times, slice_axis):
     run_imgs = [load_image(run) for run in run_fnames]
     # Spatio-temporal realigner
     R = SpaceTimeRealign(run_imgs,
                          tr=TR,
-                         slice_times='ascending',
+                         slice_times=slice_times,
                          slice_info=(slice_axis, 1))
     # Estimate motion within- and between-sessions
     R.estimate(refscan=None)
@@ -34,18 +34,14 @@ def main():
         DATA_PATH = sys.argv[1]
     except IndexError:
         raise RuntimeError("Pass data path on command line")
-    N_SLICES = 40
     TR = 2.5
-    # You need to work out slice times here
-    space_to_time = list(range(0, N_SLICES, 2)) + list(range(1, N_SLICES, 2))
-    time_to_space = np.argsort(space_to_time)
     subjects = get_subjects(DATA_PATH)
     for name, subject in subjects.items():
         run_fnames = []
         for run in subject['functionals']:
             run_fnames.append(run['filename'])
         print("Realigning subject " + name)
-        time_space_realign(run_fnames, TR, time_to_space, slice_axis=0)
+        time_space_realign(run_fnames, TR, 'ascending', slice_axis=0)
 
 
 if __name__ == '__main__':
