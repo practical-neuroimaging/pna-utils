@@ -32,6 +32,8 @@ def main():
             res = screens.screen(img, slice_axis=0)
             pth, fname = os.path.split(fname)
             froot, ext = os.path.splitext(fname)
+            if ext in ('.gz', '.bz2'): # discard compressed exts
+                froot, ext = os.path.splitext(froot)
             screens.write_screen_res(res, pth, froot)
 
 
