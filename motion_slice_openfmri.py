@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-""" Script to run slice timing on Haxby Open FMRI dataset """
+""" Script to run motion correction / slice timing on Haxby Open FMRI dataset
+"""
 import os
 import sys
 
